@@ -26,4 +26,20 @@ describe Oystercard do
   end
 
   it { is_expected.to respond_to(:deduct).with(1).argument }
+ 
+  it { is_expected.to respond_to(:touch_in) }
+  it { is_expected.to respond_to(:touch_out) }
+
+  it 'Allows me to touch in' do
+    expect(subject.touch_in).to eq true
+  end
+
+  it 'Allow me to touch out' do
+    subject.touch_in
+    expect(subject.touch_out).to eq false
+  end
+
+  it 'when I get a new card it is not in journey' do
+    expect(subject.in_journey).to eq false
+  end
 end
