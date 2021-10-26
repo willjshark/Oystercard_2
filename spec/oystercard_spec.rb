@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "oystercard"
+require 'oystercard'
 
 describe Oystercard do
   it 'it had a balance of zero' do
@@ -15,7 +15,15 @@ describe Oystercard do
 
   it 'raises error if the maximum balance is exceeded' do
     maximum_balance = Oystercard::MAXIMUM_BALANCE
-    subject.top_up(maximum_balance)
-    expect{ subject.top_up 1 }.to raise_error "maximum balance of #{maximum_balance} exceeded"
+    # oystercard = Oystercard.new
+    subject.top_up(90)
+    expect { subject.top_up(1) }.to raise_error "maximum balance of #{maximum_balance} exceeded"
   end
+
+  it 'deducts amount from the balance' do
+    subject.top_up(10)
+    expect(subject.deduct(5)).to eq 5
+  end
+
+  it { is_expected.to respond_to(:deduct).with(1).argument }
 end
